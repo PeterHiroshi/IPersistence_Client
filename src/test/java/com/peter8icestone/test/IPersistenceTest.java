@@ -1,8 +1,9 @@
 package com.peter8icestone.test;
 
-import com.peter8icestone.config.XMLConfigBuilder;
 import com.peter8icestone.io.Resources;
-import com.peter8icestone.pojo.Configuration;
+import com.peter8icestone.sqlSession.SqlSession;
+import com.peter8icestone.sqlSession.SqlSessionFactory;
+import com.peter8icestone.sqlSession.SqlSessionFactoryBuilder;
 import org.dom4j.DocumentException;
 
 import java.beans.PropertyVetoException;
@@ -13,16 +14,15 @@ public class IPersistenceTest {
 
     private static void test() {
         InputStream sqlMapConfigStream = Resources.getResourceAsStream("sqlMapConfig.xml");
-        XMLConfigBuilder xmlConfigBuilder = new XMLConfigBuilder();
-        Configuration configuration = null;
+        SqlSessionFactory sqlSessionFactory = null;
         try {
-            configuration = xmlConfigBuilder.parseConfig(sqlMapConfigStream);
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(sqlMapConfigStream);
         } catch (DocumentException | PropertyVetoException e) {
             e.printStackTrace();
         }
-        Optional.ofNullable(configuration)
-                .map(Configuration::getMappedStatementMap)
-                .ifPresent(System.out::println);
+        SqlSession sqlSession = Optional.ofNullable(sqlSessionFactory)
+                .map(SqlSessionFactory::openSession)
+                .orElse(null);
     }
 
     public static void main(String[] args) {
