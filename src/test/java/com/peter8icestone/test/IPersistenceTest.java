@@ -1,6 +1,7 @@
 package com.peter8icestone.test;
 
 import com.peter8icestone.io.Resources;
+import com.peter8icestone.pojo.User;
 import com.peter8icestone.sqlSession.SqlSession;
 import com.peter8icestone.sqlSession.SqlSessionFactory;
 import com.peter8icestone.sqlSession.SqlSessionFactoryBuilder;
@@ -20,9 +21,15 @@ public class IPersistenceTest {
         } catch (DocumentException | PropertyVetoException e) {
             e.printStackTrace();
         }
-        SqlSession sqlSession = Optional.ofNullable(sqlSessionFactory)
+        String statementId = "user.selectOne";
+        User user = new User();
+        user.setId(7);
+        user.setUserName("Peter");
+        User selectedUser = (User) Optional.ofNullable(sqlSessionFactory)
                 .map(SqlSessionFactory::openSession)
+                .map(sqlSession -> sqlSession.selectOne(statementId, user))
                 .orElse(null);
+        Optional.ofNullable(selectedUser).ifPresent(System.out::println);
     }
 
     public static void main(String[] args) {
