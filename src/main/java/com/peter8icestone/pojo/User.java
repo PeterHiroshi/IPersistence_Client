@@ -2,24 +2,24 @@ package com.peter8icestone.pojo;
 
 public class User {
 
-    private int id;
-    private String userName;
+    private int userId;
+    private String username;
     private int age;
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getAge() {
@@ -33,8 +33,8 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
                 ", age=" + age +
                 '}';
     }
