@@ -1,7 +1,6 @@
 package com.peter8icestone.test;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mchange.v2.c3p0.impl.C3P0PooledConnection;
 import com.peter8icestone.dao.IUserDao;
 import com.peter8icestone.io.Resources;
 import com.peter8icestone.pojo.User;
@@ -47,29 +46,6 @@ public class IPersistenceTest {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
         List<User> users = sqlSessionFactory.openSession().selectList("user.selectList");
         users.forEach(System.out::println);
-    }
-
-    @Test
-    public void testC3P0() {
-        String driverClass = "com.mysql.jdbc.Driver";
-        String url = "jdbc:mysql://localhost:3306/jdbcTest";
-        String username = "root";
-        String password = "a129bzhma";
-        ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
-        try {
-            comboPooledDataSource.setDriverClass(driverClass);
-            comboPooledDataSource.setJdbcUrl(url);
-            comboPooledDataSource.setUser(username);
-            comboPooledDataSource.setPassword(password);
-            Connection connection = comboPooledDataSource.getConnection();
-            ResultSet resultSet = connection.prepareStatement("SELECT * FROM t_user").executeQuery();
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString(2));
-            }
-            connection.close();
-        } catch (PropertyVetoException | SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Test
