@@ -1,6 +1,5 @@
 package com.peter8icestone.test;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.peter8icestone.dao.IUserDao;
 import com.peter8icestone.io.Resources;
 import com.peter8icestone.pojo.User;
@@ -12,9 +11,6 @@ import org.junit.Test;
 
 import java.beans.PropertyVetoException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
