@@ -1,10 +1,10 @@
-<mapper namespace="user">
+<mapper namespace="com.peter8icestone.dao.IUserDao">
     <!--sql的唯一标示：namespace.id来组成: statementId -->
-    <select id="selectList" resultType="com.peter8icestone.pojo.User">
+    <select id="findAll" resultType="com.peter8icestone.pojo.User">
         select * from t_user
     </select>
 
-    <select id="selectOne" parameterType="com.peter8icestone.pojo.User" resultType="com.peter8icestone.pojo.User">
+    <select id="findByCondition" parameterType="com.peter8icestone.pojo.User" resultType="com.peter8icestone.pojo.User">
         select * from t_user where userId = #{userId} and username = #{username}
     </select>
 </mapper>
