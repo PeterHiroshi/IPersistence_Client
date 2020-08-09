@@ -7,6 +7,7 @@ import com.peter8icestone.sqlSession.SqlSession;
 import com.peter8icestone.sqlSession.SqlSessionFactory;
 import com.peter8icestone.sqlSession.SqlSessionFactoryBuilder;
 import org.dom4j.DocumentException;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.beans.PropertyVetoException;
@@ -15,6 +16,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class IPersistenceTest {
+
+    private SqlSession sqlSession = null;
+    private IUserDao iUserDao = null;
+
+    @Before
+    public void before() throws PropertyVetoException, DocumentException {
+        InputStream sqlMapConfigStream = Resources.getResourceAsStream("sqlMapConfig.xml");
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(sqlMapConfigStream);
+        sqlSession = sqlSessionFactory.openSession();
+        iUserDao = sqlSession.getMapper(IUserDao.class);
+    }
 
     @Test
     public void testSelectOne() {
@@ -62,8 +74,40 @@ public class IPersistenceTest {
         IUserDao iUserDao = sqlSession.getMapper(IUserDao.class);
         User user = new User();
         user.setUserId(7);
-        user.setUsername("Peter");
+        user.setUsername("Peter8");
         User selectedUser = iUserDao.findByCondition(user);
         Optional.of(selectedUser).ifPresent(System.out::println);
+    }
+
+    @Test
+    public void testFindByUserId() {
+        IUserDao iUserDao = sqlSession.getMapper(IUserDao.class);
+        User user = iUserDao.findByUserId(7);
+        Optional.ofNullable(user).ifPresent(System.out::println);
+    }
+
+    @Test
+    public void testAddUser() {
+        User newUser = new User();
+        newUser.setUsername("testUser1");
+        newUser.setAge(21);
+        int updatedRows = iUserDao.addUser(newUser);
+        System.out.println(updatedRows);
+    }
+
+    @Test
+    public void testUpdateUser() {
+        User updateUser = new User();
+        updateUser.setUserId(7);
+        updateUser.setUsername("PeterNew");
+        updateUser.setAge(29);
+        int updatedRows = iUserDao.updateUser(updateUser);
+        System.out.println(updatedRows);
+    }
+
+    @Test
+    public void testDeleteUser() {
+        int updatedRows = iUserDao.deleteUser(15);
+        System.out.println(updatedRows);
     }
 }

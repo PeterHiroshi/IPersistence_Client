@@ -7,4 +7,20 @@
     <select id="findByCondition" parameterType="com.peter8icestone.pojo.User" resultType="com.peter8icestone.pojo.User">
         select * from t_user where userId = #{userId} and username = #{username}
     </select>
+
+    <select id="findByUserId" parameterType="java.lang.Integer" resultType="com.peter8icestone.pojo.User">
+        select * from t_user where userId = #{userId}
+    </select>
+
+    <insert id="addUser" parameterType="com.peter8icestone.pojo.User">
+        INSERT INTO t_user(username, age) VALUES(#{username}, #{age})
+    </insert>
+
+    <update id="updateUser" parameterType="com.peter8icestone.pojo.User">
+        UPDATE t_user SET username=#{username}, age=#{age} WHERE userId = #{userId}
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        DELETE FROM t_user WHERE userId = #{id}
+    </delete>
 </mapper>

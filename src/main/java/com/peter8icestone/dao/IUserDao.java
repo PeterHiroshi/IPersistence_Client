@@ -10,4 +10,8 @@ public interface IUserDao {
     List<User> findAll();
     // get user by condition
     User findByCondition(User user);
+    User findByUserId(Integer userId);
+    int addUser(User user);
+    int updateUser(User user);
+    int deleteUser(Integer userId);
 }
